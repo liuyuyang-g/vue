@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .aa{
+            background: #f00;
+        }
+        .bb{
+            background: rgb(0, 132, 255);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <h2 v-bind:id='msg'></h2>
+        <h2 :id='msg'>
+            {{msg}}
+        </h2> -->
+
+        <h2 :class='{aa:isA,bb:isB}' @click=change()>{{msg}}</h2>
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+        let vml = new Vue({
+            el:"#app",
+            data:{
+                msg:'九劫',
+                isA:true,
+                isB:false,
+            },
+            methods:{
+                change(){
+                    /* this.isA = !this.isA;
+                    this.isB = !this.isB; */
+                    if(this.isA){
+                        this.isA = !this.isA;
+                        this.isB = !this.isB;
+                        this.msg = '一点寒光万丈芒';
+                    }else{
+                        this.isB = !this.isB;
+                        this.isA = !this.isA;
+                        this.msg = '屠尽天下又何妨';
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

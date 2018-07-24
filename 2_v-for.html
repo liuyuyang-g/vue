@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- <ul>
+            <li v-for="val in arr">{{val}}</li>
+        </ul>
+        <h2 v-for="(val,key) in obj">{{key}} : {{val}}</h2>
+
+        <div v-text="msg"></div>
+        <div v-html="msg"></div> -->
+
+        <button v-on:click = "show(2)">click</button>
+        <!-- v-on可简写成@ -->
+        <div>{{num}}</div>
+    </div>
+
+    <script src="vue.js"></script>
+
+    <script>
+        let vml = new Vue({
+            el:"#app",
+            data:{
+                arr:[1,2,3,4],
+                obj:{
+                    name:"zs",
+                    age:10,
+                },
+                msg:"test",
+                num:0,
+            },
+            methods:{
+                show(x){
+                    this.num += x;
+                    console.log(event);
+                }
+            }
+        })
+    </script>
+</body>
+</html>
