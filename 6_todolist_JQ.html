@@ -66,7 +66,7 @@
 
         <div>
             <button class="del">删除选中</button>
-            总价
+            <span>总价</span>
             <span class="total-price">0</span>
         </div>
     </div>
@@ -101,15 +101,16 @@
         }
         let flag = true; //没有被点击
         $('ul').on('click','li', function () {
-            var total = 0;
+            // var total = 0;
             if($(this).hasClass('selected')){
                 $(this).removeClass('selected');
-                total=$('.total-price').html()*1 - $(this).find('.price').html()*1;
+                // total=$('.total-price').html()*1 - $(this).find('.price').html()*1;
             }else{
                 $(this).addClass('selected');
-                total=$('.total-price').html()*1 + $(this).find('.price').html()*1;
+                // total=$('.total-price').html()*1 + $(this).find('.price').html()*1;
             }
-            $('.total-price').html(total);
+            // $('.total-price').html(total);
+            total();
         });
 
         $('.add').on('click',function(){
@@ -137,15 +138,25 @@
                 var index= $('input:checked').eq(i).index('input:checkbox');   
                 proList.splice(index,1);
                 $('li').eq(index).remove();
-                $('.total-price').html(0);
             }
-            console.log(proList);
+            total();
+            // console.log(proList);
             
         })
 
         $('.search').on('click',function(){
             $('li:contains('+ $('.search-val').val() +')').show().siblings().hide();
+            total();
         })
+        
+        /* 计算总价 */
+        function total(){
+            var count=0;
+            $(':visible:checked').each(function(){
+                count+=$(this).siblings('.price').html()*1;
+            })
+            $('.total-price').html(count);
+        }
     </script>
 </body>
 

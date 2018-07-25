@@ -1,12 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            width: 400px;
+            margin: 50px auto;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            height: 50px;
+            line-height: 50px;
+            background: #cccccc;
+            padding: 0 10px;
+            margin-bottom: 10px;
+        }
+
+        .close {
+            float: right;
+        }
+
+        .close {
+            margin-left: 10px;
+            color: red;
+        }
+
+        .selected {
+            background:skyblue;
+        }
+        h1{
+            text-align: center
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div id="container">
+        <h1>todolist</h1>
+        <hr>
+        <div>
+            <label for="proName">名称</label>
+            <input type="text" id="proName" placeholder="请输入产品名" v-model='name'>
+            <label for="proPrice">价格</label>
+            <input type="text" id="proPrice" placeholder="请输入产品价格" v-model='price'>
+            <button class="add" @click='add()'>添加</button>
+        </div>
+        <div>
+            <input type="text" class="search-val" placeholder="请输入搜索内容">
+            <button class="search">搜索</button>
+        </div>
+        <ul>
+            <li v-for='(product,index) in proList' @click='change(product,index)' :class='{selected:product.isSel}'>
+                <input type="checkbox" :value="index" v-model='check'>
+                <span v-html='product.name'></span>
+                <span class="close">[X]</span>
+                <span class="price" v-html='product.price'></span>
+                <span>元</span>
+            </li>
+        </ul>
+        <div>
+            <button class="del">删除选中</button>
+            <span>总价</span>
+            <span class="total-price">{{sum()}}</span>
+        </div>
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el: '#container',
+            data: {
+                proList:[{
+                    name: '裤子',
+                    price: 122,
+                    isSel:false,
+                }, {
+                    name: '衣服',
+                    price: 122,
+                    isSel:false,
+                }, {
+                    name: '电脑',
+                    price: 5555,
+                    isSel:false,
+                }, {
+                    name: 'iphoneX',
+                    price: 8888,
+                    isSel:false,
+                }],
+                name:'',
+                price:'',
+                check:[],
+            },
+            methods:{
+                change(product,index){
+                    if(product.isSel){
+                        this.check.splice(this.check.indexOf(index),1); 
+                    }else{
+                        this.check.push(index);
+                    }
+                    product.isSel = !product.isSel;
+                },
+                add(){
+                    this.proList.push({
+                        name:this.name,
+                        price:this.price,
+                        isSel:false
+                    })
+                    this.name='';
+                    this.price='';
+                },
+                sum(){
+                    var totalPrice = 0;
+                    this.proList.forEach(function(pro,idx){
+                        if(pro.isSel){
+                            totalPrice += pro.price*1;
+                        }
+                    });
+                    return totalPrice;
+                }
+            }
+        })
+    </script>
 </body>
+
 </html>
