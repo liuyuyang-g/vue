@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            width: 400px;
+            margin: 50px auto;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            height: 50px;
+            line-height: 50px;
+            background: #cccccc;
+            padding: 0 10px;
+            margin-bottom: 10px;
+        }
+
+        .price,
+        .close {
+            float: right;
+        }
+
+        .close {
+            margin-left: 10px;
+            color: red;
+        }
+
+        .selected {
+            background: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>todolist</h1>
+        <hr>
+        <div>
+            <label for="proName">名称</label>
+            <input type="text" id="proName" placeholder="请输入产品名">
+            <label for="proPrice">价格</label>
+            <input type="text" id="proPrice" placeholder="请输入产品价格">
+            <button class="add">添加</button>
+        </div>
+        <div>
+            <input type="text" class="search-val" placeholder="请输入搜索内容">
+            <button class="search">搜索</button>
+        </div>
+        <ul>
+
+        </ul>
+
+        <div>
+            <button class="del">删除选中</button>
+            总价
+            <span class="total-price">0</span>
+        </div>
+    </div>
+    <script src="jquery-1.12.4.js"></script>
+    <script>
+        var proList = [{
+            name: '裤子',
+            price: 122,
+        }, {
+            name: '衣服',
+            price: 122,
+        }, {
+            name: '电脑',
+            price: 5555,
+        }, {
+            name: 'iphoneX',
+            price: 8888,
+        }];
+
+        // let html = ``;
+
+        /* 初始化商品列表 */
+        for (var i = 0; i < proList.length; i++) {
+            var html =
+                `<li>
+                <input type="checkbox">
+                <span>${proList[i].name}</span>
+                <span class="close">[X]</span>
+                <span class="price">${proList[i].price}</span>
+            </li>`;
+            $('ul').append(html);
+        }
+        let flag = true; //没有被点击
+        $('ul').on('click','li', function () {
+            var total = 0;
+            if($(this).hasClass('selected')){
+                $(this).removeClass('selected');
+                total=$('.total-price').html()*1 - $(this).find('.price').html()*1;
+            }else{
+                $(this).addClass('selected');
+                total=$('.total-price').html()*1 + $(this).find('.price').html()*1;
+            }
+            $('.total-price').html(total);
+        });
+
+        $('.add').on('click',function(){
+            proList.push({
+                name:$('#proName').val(),
+                price:$('#proPrice').val(),
+            });
+            var html =
+                `<li>
+                <input type="checkbox">
+                <span>${$('#proName').val()}</span>
+                <span class="close">[X]</span>
+                <span class="price">${$('#proPrice').val()}</span>
+            </li>`;
+            $('ul').append(html);
+        })
+
+        $('.del').on('click',function(){
+            //删除数组中商品（模拟从数据库中删除）
+            /* $('input；checked').each(function(){
+                var index= $(this).index('input:checkbox');
+                $('proList').splice(index,1);
+            }) */
+            for(var i=$('input:checked').length-1;i>=0;i--){
+                var index= $('input:checked').eq(i).index('input:checkbox');   
+                proList.splice(index,1);
+                $('li').eq(index).remove();
+                $('.total-price').html(0);
+            }
+            console.log(proList);
+            
+        })
+
+        $('.search').on('click',function(){
+            $('li:contains('+ $('.search-val').val() +')').show().siblings().hide();
+        })
+    </script>
+</body>
+
+</html>

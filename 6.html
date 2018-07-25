@@ -5,10 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        #container{
+            width: 500px;
+            margin: 200px auto;
+        }
+        .header{
+            text-align: center;
+            border-bottom: 2px solid #ccc;
+        }
+        .search{
+            margin-top: 10px;
+        }
+        .shop{
+            width: 500px;
+            margin-top: 10px;
+            float: left;
+        }
+        .shop div{
+            height: 40px;
+            background: #ccc;
+            margin-top: 5px;
+            line-height: 40px;
+            border-radius: 5px;
+        }
+        .shop .price{
+            float: right;
+        }
+        .delete{
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
     <div id="container">
-
+        <div class="header">todolist</div>
+        <div class="search">
+            <label for="proName">名称</label>
+            <input type="text" placeholder="请输入产品名称" class="name" value="" id="proName">
+            <label for="proPrice">价格</label>
+            <input type="text" class="price" value="" id="proPrice">
+            <button class="add">增加</button>
+            <input type="text" placeholder="请输入搜索关键字">
+            <button class="inquire">查询</button>            
+        </div>
+        <div class="shop">
+                <div>
+                    <input type="checkbox">[X]&nbsp;衣服
+                    <span class="price">123</span>
+                </div>
+                <div>
+                    <input type="checkbox">[X]&nbsp;裤子 
+                    <span class="price">160</span>
+                </div>
+                <div>
+                    <input type="checkbox">[X]&nbsp;鞋
+                    <span class="price">423</span>
+                </div>
+                <div>
+                    <input type="checkbox">[X]&nbsp;iponeX
+                    <span class="price">8888</span>
+                </div>
+                <div>
+                    <input type="checkbox">[X]&nbsp;电脑
+                    <span class="price">6000</span>
+                </div>
+        </div>
+        <button class="delete">删除选中</button>
+        <div class="num">总价</div>
     </div>
+
+    <script src="jquery-1.12.4.js"></script>
+    <script>
+        $('.shop div').on('click',function(){
+            $(this).css('background','red');
+            $('.num').append($('.shop .price').html());
+        });
+        $('.add').on('click',function(){
+            $('.shop').append('<div>'+'<input type="checkbox">[X]&nbsp;'+$('.search .name').val()+ '<span class="price">'+ $('.search .price').val() +'</span>' +'</div>');
+            //'<span class="price">'+ $('.search .price').val() +'</span>'
+            //console.log($('.search .price').val());
+        });
+
+    </script>
 </body>
 </html>
